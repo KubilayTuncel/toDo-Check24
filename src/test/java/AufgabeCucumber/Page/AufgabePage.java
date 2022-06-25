@@ -5,7 +5,6 @@ import io.appium.java_client.MobileElement;
 import io.appium.java_client.pagefactory.AndroidFindBy;
 import io.appium.java_client.pagefactory.AppiumFieldDecorator;
 import org.openqa.selenium.support.PageFactory;
-import utilities.AufgabeDriver;
 
 import java.time.Duration;
 
@@ -34,7 +33,7 @@ public class AufgabePage {
     public MobileElement headerDatum;
 
     @AndroidFindBy (xpath = "//android.widget.Button[@text='OK']")
-    public MobileElement OkButton;
+    public MobileElement okButton;
 
     @AndroidFindBy (id = "com.example.yeshasprabhakar.todo:id/time")
     public MobileElement zeitButton;

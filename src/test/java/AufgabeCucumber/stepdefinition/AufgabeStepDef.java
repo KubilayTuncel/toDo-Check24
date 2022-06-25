@@ -41,7 +41,13 @@ public class AufgabeStepDef {
     public void wählenDatumAus() {
         aufgabePage.nextButtonInDatum.click();
         aufgabePage.tagInDatum.click();
-        aufgabePage.OkButton.click();
+    }
+
+
+    @Then("Assert {string} in Datum Header")
+    public void assertInDatumHeader(String datum) {
+        Assert.assertEquals(aufgabePage.headerDatum.getText(),datum);
+        aufgabePage.okButton.click();
     }
 
     @Then("Klicken Zeit button")
@@ -54,17 +60,12 @@ public class AufgabeStepDef {
         touchAction = new TouchAction(AufgabeDriver.getAppiumDriver());
         touchAction.press(ElementOption.element(aufgabePage.hour)).release().perform();
         touchAction.press(ElementOption.element(aufgabePage.minute)).release().perform();
-        aufgabePage.OkButton.click();
+        aufgabePage.okButton.click();
         //alternative way
         //touchAction.press(ElementOption.element(aufgabePage.hour)).
          //       waitAction(WaitOptions.waitOptions(Duration.ofSeconds(2))).
          //       moveTo(ElementOption.element(aufgabePage.minute)).perform();
 
-    }
-
-    @Then("Assert {string} in Datum Header")
-    public void assertInDatumHeader(String datum) {
-        Assert.assertEquals(aufgabePage.headerDatum.getText(),datum);
     }
 
     @Then("Klicken Done Button")
@@ -79,12 +80,14 @@ public class AufgabeStepDef {
 
 
     @Then("Klicken Cancel Button")
-    public void klickenCancelButton() {
+    public void klickenCancelButton() throws InterruptedException {
         aufgabePage.cancelButton.click();
+        Thread.sleep(2000);
     }
 
     @Then("Assert Es wurde kein neuer Task hinzufügt, oben steht noch immer {string}")
     public void assertEsWurdeKeinNeuerTaskHinzufügtObenStehtNochImmer(String toDoText) {
+        //System.out.println(aufgabePage.textViewInMainPage.getText());
         Assert.assertTrue(aufgabePage.textViewInMainPage.getText().contains(toDoText));
     }
 
@@ -104,14 +107,15 @@ public class AufgabeStepDef {
     }
 
     @When("Klicken Sonne-Mond Icon")
-    public void klickenSonneMondIcon() {
+    public void klickenSonneMondIcon() throws InterruptedException {
         aufgabePage.actionIcon.click();
+        Thread.sleep(2000);
     }
 
     @Then("Assert Background Farbe der Veränderung")
     public void assertBackgroundFarbeDerVeränderung() throws IOException, InterruptedException {
 
-        int redFarbe = ReusableMethods.Farbe(aufgabePage.actionBar);
+        int redFarbe = ReusableMethods.farbe(aufgabePage.actionBar);
 
         Assert.assertEquals("Action bar color black",255,redFarbe);
     }

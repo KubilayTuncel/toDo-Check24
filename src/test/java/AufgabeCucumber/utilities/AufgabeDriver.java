@@ -3,14 +3,12 @@ package AufgabeCucumber.utilities;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.MobileElement;
 import io.appium.java_client.android.AndroidDriver;
-import io.appium.java_client.ios.IOSDriver;
 import io.appium.java_client.remote.MobileCapabilityType;
 import org.openqa.selenium.remote.DesiredCapabilities;
-import utilities.ConfigReader;
-
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.concurrent.TimeUnit;
+import AufgabeCucumber.utilities.ConfigReader;
 
 public class AufgabeDriver {
     private static AppiumDriver<MobileElement> appiumDriver;
@@ -32,26 +30,11 @@ public class AufgabeDriver {
             desiredCapabilities.setCapability(MobileCapabilityType.NO_RESET,true);
             desiredCapabilities.setCapability(MobileCapabilityType.APP, ConfigReader.getProperty("aufgabePath"));
 
-            //desiredCapabilities.setCapability("appPackage","com.amazon.mShop.android.shopping");
-            //desiredCapabilities.setCapability("appPackage","com.amazon.mShop.navigation.MainActivity");
-            //desiredCapabilities.setCapability(MobileCapabilityType.NO_RESET, false);
             desiredCapabilities.setCapability("autoAcceptAlert",true);
             desiredCapabilities.setCapability("fullReset","false");
             if (ConfigReader.getProperty("platformName").equals("android")) {
-                //if you do not provide app path so you should provide "appPackage" and "appActivity"
-                //desiredCapabilities.setCapability("appPackage","");
-                //desiredCapabilities.setCapability("appActivity","");
-                //desiredCapabilities.setCapability("appActivity", "com.amazon.mShop.splashscreen.StartupActivity");
-                //desiredCapabilities.setCapability("appPackage", "in.amazon.mShop.android.shopping");
-
-
                 appiumDriver = new AndroidDriver(appiumServerURL,desiredCapabilities);
                 appiumDriver.manage().timeouts().implicitlyWait(15, TimeUnit.SECONDS);
-            } else if (ConfigReader.getProperty("platformName").equals("ios")) {
-                //if you do not provide app path so you should use "bundleId"
-                desiredCapabilities.setCapability("bundleId",ConfigReader.getProperty("iosBundleId"));
-                appiumDriver = new IOSDriver(appiumServerURL,desiredCapabilities);
-                appiumDriver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
             } else {
                 throw new UnsupportedOperationException("Invalid Platform Name " + ConfigReader.getProperty("platformName"));
             }
